@@ -10,6 +10,22 @@ Add a getter property length to the prototype that computes the length of the ve
 */
 // Your code here.
 
+class Vec {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  plus(vector) {
+    return new Vec(this.x + vector.x, this.y + vector.y);
+  }
+
+  minus(vector) {
+    return new Vec(this.x - vector.x, this.y - vector.y)
+  }
+  get length() {
+    return this.y + 1;
+  }
+}
 console.log(new Vec(1, 2).plus(new Vec(2, 3)));
 // → Vec{x: 3, y: 5}
 console.log(new Vec(1, 2).minus(new Vec(2, 3)));
@@ -32,7 +48,36 @@ Use the === operator, or something equivalent such as indexOf, to determine whet
 Give the class a static from method that takes an iterable object as argument and creates a group that contains all the values produced by iterating over it.
 */
 class Group {
-  // Your code here.
+  constructor() {
+    this.collection = [];
+  }
+
+  has(value) {
+    if (this.collection.indexOf(value) != -1) {
+      return true;
+    }
+    return false;
+  }
+
+  add(value) {
+    if (!this.has(value)) {
+      this.collection.push(value);
+    }
+  }
+  delete(value){
+    if (this.has(value)) {
+      this.collection.sort((a,b) => a == value);
+      this.collection.shift();
+    }
+  }
+
+  static from(iterable) {
+    let theGroup = new Group();
+    for (let i = 0; i < iterable.length; i++) {
+      theGroup.add(iterable[i]);
+    }
+    return theGroup;
+  }
 }
 
 let group = Group.from([10, 20]);
@@ -55,7 +100,38 @@ That would work, but it defeats the purpose of this exercise.
 
 It is okay if your iterator behaves strangely when the group is modified during iteration.
 */
-// Your code here (and the code from the previous exercise)
+class Group {
+  constructor() {
+    this.collection = [];
+  }
+
+  has(value) {
+    if (this.collection.indexOf(value) != -1) {
+      return true;
+    }
+    return false;
+  }
+
+  add(value) {
+    if (!this.has(value)) {
+      this.collection.push(value);
+    }
+  }
+  delete(value){
+    if (this.has(value)) {
+      this.collection.sort((a,b) => a == value);
+      this.collection.shift();
+    }
+  }
+
+  static from(iterable) {
+    let theGroup = new Group();
+    for (let i = 0; i < iterable.length; i++) {
+      theGroup.add(iterable[i]);
+    }
+    return theGroup;
+  }
+}
 
 for (let value of Group.from(["a", "b", "c"])) {
   console.log(value);
